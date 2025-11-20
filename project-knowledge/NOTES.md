@@ -21,4 +21,18 @@
 
 ## Development Notes
 
-_(Reserved for technical decisions, API findings, and implementation notes during development)_
+**Micro-Project 3 Finding - Truck Routing Limitations:**
+- Google Routes API v2 (computeRoutes endpoint) does NOT support truck-specific parameters
+- Parameters like heightMeters, weightKg, lengthMeters, vehicleType are not available in Routes API v2
+- The API only supports standard travel modes: DRIVE, WALK, BICYCLE, TRANSIT, TWO_WHEELER
+- For truck routing with dimensional restrictions, would need Google Route Optimization API (different product)
+- Current implementation uses standard DRIVE mode with TRAFFIC_AWARE routing preference
+- Returns: polyline (GeoJSON), duration, distance, warnings, travel advisory
+
+**API Configuration:**
+- Endpoint: https://routes.googleapis.com/directions/v2:computeRoutes
+- Headers: X-Goog-Api-Key, X-Goog-FieldMask, Content-Type
+- Polyline Encoding: GEO_JSON_LINESTRING (corrected from invalid "GEO_JSON")
+- Field Mask: routes.duration,routes.distanceMeters,routes.polyline,routes.warnings,routes.travelAdvisory
+
+_(Additional technical decisions, API findings, and implementation notes will be added here during development)_
